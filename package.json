@@ -4,15 +4,18 @@
   "description": "Fast terminal SQLite inspector powered by Bun and @opentui/solid",
   "type": "module",
   "bin": {
-    "bunsql": "./bin/bunsql"
+    "bunsql": "./bin/bunsql-dist"
   },
   "engines": {
     "bun": ">=1.1.0"
   },
+  "scripts": {
+    "build": "bun run build.ts",
+    "prepublishOnly": "bun run build"
+  },
   "files": [
-    "bin",
-    "src",
-    "bunfig.toml"
+    "bin/bunsql-dist",
+    "dist"
   ],
   "dependencies": {
     "@opentui/core": "^0.1.45",
