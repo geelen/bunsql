@@ -41,7 +41,6 @@ export function DataGrid(props: DataGridProps) {
         </box>
       }>
         <scrollbox
-          focused={props.focused}
           stickyScroll={false}
           style={{
             flexGrow: 1,
