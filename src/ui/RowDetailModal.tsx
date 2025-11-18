@@ -42,7 +42,8 @@ export function RowDetailModal(props: RowDetailModalProps) {
         }}
       >
         <box 
-          padding={1} 
+          paddingLeft={1}
+          paddingRight={1}
           borderBottom 
           backgroundColor={theme.colors.backgroundAlt}
           style={{ borderColor: theme.colors.border }}
@@ -74,16 +75,17 @@ export function RowDetailModal(props: RowDetailModalProps) {
                   const displayValue = isNull ? "NULL" : String(value)
 
                   return (
-                    <box flexDirection="column" gap={0}>
-                      <box paddingLeft={1}>
+                    <box flexDirection="column">
+                      <box paddingLeft={1} paddingTop={1}>
                         <text style={{ fg: theme.colors.textDim }}>
                           {col.name}
                         </text>
                       </box>
                       <box
-                        padding={1}
+                        paddingLeft={1}
+                        paddingRight={1}
+                        paddingBottom={1}
                         backgroundColor={theme.colors.backgroundAlt}
-                        style={{ marginBottom: 1 }}
                       >
                         <text
                           style={{

@@ -55,7 +55,8 @@ export function DataGrid(props: DataGridProps) {
             <box
               flexDirection="row"
               backgroundColor={theme.colors.backgroundAlt}
-              padding={1}
+              paddingLeft={1}
+              paddingRight={1}
               borderBottom
               style={{ borderColor: theme.colors.border }}
             >
@@ -82,7 +83,8 @@ export function DataGrid(props: DataGridProps) {
                         ? theme.colors.selected
                         : theme.colors.background
                     }
-                    padding={1}
+                    paddingLeft={1}
+                    paddingRight={1}
                   >
                     <For each={props.store.columns()}>
                       {(col) => {

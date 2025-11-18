@@ -21,13 +21,13 @@ export function StatusBar(props: StatusBarProps) {
 
   return (
     <box
-      height={3}
       borderTop
       style={{
         borderColor: theme.colors.border,
         backgroundColor: theme.colors.backgroundAlt,
       }}
-      padding={1}
+      paddingLeft={1}
+      paddingRight={1}
     >
       <box flexGrow={1} flexDirection="row" justifyContent="space-between">
         <box>
