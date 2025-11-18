@@ -1,0 +1,17 @@
+#!/usr/bin/env bun
+import { start } from "../src/app.tsx"
+import { existsSync } from "fs"
+
+const dbPath = process.argv[2]
+
+if (!dbPath) {
+  console.error("Usage: bunsql <database.sqlite3>")
+  process.exit(1)
+}
+
+if (!existsSync(dbPath)) {
+  console.error(`Error: Database file not found: ${dbPath}`)
+  process.exit(1)
+}
+
+await start(dbPath)

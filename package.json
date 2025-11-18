@@ -1,0 +1,30 @@
+{
+  "name": "bunsql",
+  "version": "0.1.0",
+  "description": "Fast terminal SQLite inspector powered by Bun and @opentui/solid",
+  "type": "module",
+  "bin": {
+    "bunsql": "./bin/bunsql"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "dependencies": {
+    "@opentui/solid": "^0.1.44",
+    "solid-js": "^1.9.3"
+  },
+  "keywords": [
+    "sqlite",
+    "database",
+    "inspector",
+    "tui",
+    "terminal",
+    "bun"
+  ],
+  "author": "",
+  "license": "MIT"
+}
