@@ -25,8 +25,8 @@ export function RowDetailModal(props: RowDetailModalProps) {
       width="100%"
       height="100%"
       zIndex={100}
+      backgroundColor="rgba(0, 0, 0, 0.5)"
       style={{
-        backgroundColor: theme.colors.modalOverlay,
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -36,8 +36,8 @@ export function RowDetailModal(props: RowDetailModalProps) {
         height="80%"
         border
         borderColor={theme.colors.borderActive}
+        backgroundColor={theme.colors.background}
         style={{
-          backgroundColor: theme.colors.background,
           flexDirection: "column",
         }}
       >
