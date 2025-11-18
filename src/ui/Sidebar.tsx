@@ -40,6 +40,10 @@ export function Sidebar(props: SidebarProps) {
         selectedTextColor={theme.colors.highlight}
         showScrollIndicator={true}
         wrapSelection={true}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
       />
     </box>
   )
