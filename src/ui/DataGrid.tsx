@@ -3,6 +3,11 @@ import type { AppState } from "../state/store"
 import { theme } from "../theme"
 import { formatCell, isNumeric, alignCell } from "../utils/format"
 
+function isNumericValue(value: any): boolean {
+  if (value === null || value === undefined) return false
+  return typeof value === "number" || !isNaN(Number(value))
+}
+
 interface DataGridProps {
   store: AppState
   focused: boolean
@@ -25,9 +30,7 @@ export function DataGrid(props: DataGridProps) {
     <box
       flexGrow={1}
       border
-      borderColor={props.focused ? theme.colors.accent : theme.colors.textDim}
-      title={props.store.selectedTable()?.name || "No table selected"}
-      titleAlignment="center"
+      borderColor={props.focused ? theme.colors.borderActive : theme.colors.border}
       style={{
         backgroundColor: theme.colors.background,
         flexDirection: "column",
@@ -51,16 +54,18 @@ export function DataGrid(props: DataGridProps) {
           <box flexDirection="column">
             <box
               flexDirection="row"
-              backgroundColor={theme.colors.gridHeader}
+              backgroundColor={theme.colors.backgroundAlt}
               padding={1}
+              borderBottom
+              style={{ borderColor: theme.colors.border }}
             >
               <For each={props.store.columns()}>
                 {(col) => {
                   const width = getColumnWidth(col.name, col.cid)
                   return (
                     <box width={width} paddingRight={1}>
-                      <text>
-                        <b style={{ fg: theme.colors.accent }}>{col.name}</b>
+                      <text style={{ fg: theme.colors.textDim }}>
+                        {col.name}
                       </text>
                     </box>
                   )
@@ -75,9 +80,7 @@ export function DataGrid(props: DataGridProps) {
                     backgroundColor={
                       idx() === props.store.selectedRowIndex() && props.focused
                         ? theme.colors.selected
-                        : idx() % 2 === 0
-                        ? theme.colors.gridRowEven
-                        : theme.colors.gridRowOdd
+                        : theme.colors.background
                     }
                     padding={1}
                   >
@@ -86,13 +89,18 @@ export function DataGrid(props: DataGridProps) {
                         const width = getColumnWidth(col.name, col.cid)
                         const value = row[col.name]
                         const isNull = value === null || value === undefined
+                        const isNum = isNumericValue(value)
                         const formatted = formatCell(value, width - 2)
                         
                         return (
                           <box width={width} paddingRight={1}>
                             <text
                               style={{
-                                fg: isNull ? theme.colors.textDim : theme.colors.text,
+                                fg: isNull 
+                                  ? theme.colors.null 
+                                  : isNum 
+                                  ? theme.colors.number 
+                                  : theme.colors.string,
                               }}
                             >
                               {formatted}

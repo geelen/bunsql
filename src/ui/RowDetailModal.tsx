@@ -26,7 +26,7 @@ export function RowDetailModal(props: RowDetailModalProps) {
       height="100%"
       zIndex={100}
       style={{
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        backgroundColor: theme.colors.modalOverlay,
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -35,17 +35,24 @@ export function RowDetailModal(props: RowDetailModalProps) {
         width="80%"
         height="80%"
         border
-        borderColor={theme.colors.accent}
-        title={`Row ${rowNumber()} of ${totalRows()} - ${props.store.selectedTable()?.name || ""}`}
-        titleAlignment="center"
+        borderColor={theme.colors.borderActive}
         style={{
           backgroundColor: theme.colors.background,
           flexDirection: "column",
         }}
       >
-        <box padding={1} borderBottom style={{ borderColor: theme.colors.textDim }}>
+        <box 
+          padding={1} 
+          borderBottom 
+          backgroundColor={theme.colors.backgroundAlt}
+          style={{ borderColor: theme.colors.border }}
+        >
           <text style={{ fg: theme.colors.textDim }}>
-            Press <b style={{ fg: theme.colors.accent }}>j/k</b> to navigate rows | <b style={{ fg: theme.colors.accent }}>Esc</b> to close
+            <span style={{ fg: theme.colors.text }}>{props.store.selectedTable()?.name || ""}</span>
+            {" • "}
+            Row {rowNumber()} of {totalRows()}
+            {" • "}
+            j/k navigate • Esc close
           </text>
         </box>
 
@@ -63,24 +70,28 @@ export function RowDetailModal(props: RowDetailModalProps) {
                 {(col) => {
                   const value = currentRow()[col.name]
                   const isNull = value === null || value === undefined
+                  const isNum = !isNull && (typeof value === "number" || !isNaN(Number(value)))
                   const displayValue = isNull ? "NULL" : String(value)
 
                   return (
                     <box flexDirection="column" gap={0}>
-                      <box>
-                        <text>
-                          <b style={{ fg: theme.colors.accent }}>{col.name}</b>
-                          <span style={{ fg: theme.colors.textDim }}> ({col.type || "unknown"})</span>
+                      <box paddingLeft={1}>
+                        <text style={{ fg: theme.colors.textDim }}>
+                          {col.name}
                         </text>
                       </box>
                       <box
                         padding={1}
-                        backgroundColor={isNull ? theme.colors.gridRowEven : theme.colors.gridRowOdd}
+                        backgroundColor={theme.colors.backgroundAlt}
                         style={{ marginBottom: 1 }}
                       >
                         <text
                           style={{
-                            fg: isNull ? theme.colors.textDim : theme.colors.text,
+                            fg: isNull 
+                              ? theme.colors.null
+                              : isNum
+                              ? theme.colors.number
+                              : theme.colors.textBright,
                           }}
                         >
                           {displayValue}

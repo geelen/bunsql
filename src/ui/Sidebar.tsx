@@ -16,9 +16,7 @@ export function Sidebar(props: SidebarProps) {
     <box
       width={30}
       border
-      borderColor={props.focused ? theme.colors.accent : theme.colors.textDim}
-      title="Tables"
-      titleAlignment="center"
+      borderColor={props.focused ? theme.colors.borderActive : theme.colors.border}
       style={{
         backgroundColor: theme.colors.background,
         flexDirection: "column",
@@ -29,7 +27,7 @@ export function Sidebar(props: SidebarProps) {
         focused={props.focused}
         options={props.store.tables().map((t, i) => ({
           name: t.name,
-          description: t.type,
+          description: "",
           value: i,
         }))}
         onChange={(index) => {
@@ -37,7 +35,7 @@ export function Sidebar(props: SidebarProps) {
         }}
         onSelect={props.onSelect}
         selectedBackgroundColor={theme.colors.selected}
-        selectedTextColor={theme.colors.highlight}
+        selectedTextColor={theme.colors.textBright}
         showScrollIndicator={true}
         wrapSelection={true}
         style={{

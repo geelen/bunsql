@@ -22,38 +22,36 @@ export function StatusBar(props: StatusBarProps) {
   return (
     <box
       height={3}
-      border
-      borderColor={theme.colors.border}
-      padding={1}
+      borderTop
       style={{
-        backgroundColor: theme.colors.background,
-        flexDirection: "row",
-        justifyContent: "space-between",
+        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.backgroundAlt,
       }}
+      padding={1}
     >
-      <box flexGrow={1}>
-        <text style={{ fg: theme.colors.textDim }}>
-          {props.store.dbPath}
-          <Show when={props.store.selectedTable()}>
-            {" | "}
-            <span style={{ fg: theme.colors.accent }}>
-              {props.store.selectedTable()!.name}
-            </span>
-          </Show>
-          <Show when={props.store.totalCount() !== undefined}>
-            {" | "}
-            {props.store.totalCount()} rows
-          </Show>
-          {" | Page "}
-          {props.store.page() + 1}
-          <Show when={props.store.sort().col}>
-            {" | "}
-            ↕ {props.store.sort().col} {props.store.sort().dir}
-          </Show>
-        </text>
-      </box>
-      <box>
-        <text style={{ fg: theme.colors.textDim }}>{getHints()}</text>
+      <box flexGrow={1} flexDirection="row" justifyContent="space-between">
+        <box>
+          <text style={{ fg: theme.colors.textDim }}>
+            <Show when={props.store.selectedTable()}>
+              <span style={{ fg: theme.colors.text }}>
+                {props.store.selectedTable()!.name}
+              </span>
+              {" • "}
+            </Show>
+            Page {props.store.page() + 1}
+            <Show when={props.store.totalCount() !== undefined}>
+              {" / "}
+              {Math.ceil(props.store.totalCount()! / props.store.pageSize())}
+            </Show>
+            <Show when={props.store.sort().col}>
+              {" • "}
+              {props.store.sort().col} {props.store.sort().dir}
+            </Show>
+          </text>
+        </box>
+        <box>
+          <text style={{ fg: theme.colors.textDim }}>{getHints()}</text>
+        </box>
       </box>
     </box>
   )
