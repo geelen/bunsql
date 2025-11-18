@@ -66,44 +66,45 @@ export function RowDetailModal(props: RowDetailModalProps) {
           }}
         >
           <box flexDirection="column" gap={1}>
-            <Show when={currentRow()}>
-              <For each={props.store.columns()}>
-                {(col) => {
-                  const value = currentRow()[col.name]
-                  const isNull = value === null || value === undefined
-                  const isNum = !isNull && (typeof value === "number" || !isNaN(Number(value)))
-                  const displayValue = isNull ? "NULL" : String(value)
+            <For each={props.store.columns()}>
+              {(col) => {
+                const value = () => {
+                  const row = currentRow()
+                  return row ? row[col.name] : null
+                }
+                const isNull = () => value() === null || value() === undefined
+                const isNum = () => !isNull() && (typeof value() === "number" || !isNaN(Number(value())))
+                const displayValue = () => isNull() ? "NULL" : String(value())
 
-                  return (
-                    <box flexDirection="column">
-                      <box paddingLeft={1} paddingTop={1}>
-                        <text style={{ fg: theme.colors.textDim }}>
-                          {col.name}
-                        </text>
-                      </box>
-                      <box
-                        paddingLeft={1}
-                        paddingRight={1}
-                        paddingBottom={1}
-                        backgroundColor={theme.colors.backgroundAlt}
-                      >
-                        <text
-                          style={{
-                            fg: isNull 
-                              ? theme.colors.null
-                              : isNum
-                              ? theme.colors.number
-                              : theme.colors.textBright,
-                          }}
-                        >
-                          {displayValue}
-                        </text>
-                      </box>
+                return (
+                  <box flexDirection="column">
+                    <box paddingLeft={1} paddingTop={1}>
+                      <text style={{ fg: theme.colors.textDim }}>
+                        {col.name}
+                      </text>
                     </box>
-                  )
-                }}
-              </For>
-            </Show>
+                    <box
+                      paddingLeft={1}
+                      paddingRight={1}
+                      paddingBottom={1}
+                      backgroundColor={theme.colors.backgroundAlt}
+                    >
+                      <text
+                        style={{
+                          fg: isNull() 
+                            ? theme.colors.null
+                            : isNum()
+                            ? theme.colors.number
+                            : theme.colors.textBright,
+                        }}
+                      >
+                        {displayValue()}
+                      </text>
+                    </box>
+                  </box>
+                )
+              }}
+            </For>
           </box>
         </scrollbox>
       </box>
