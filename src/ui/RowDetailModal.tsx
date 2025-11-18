@@ -25,8 +25,8 @@ export function RowDetailModal(props: RowDetailModalProps) {
       width="100%"
       height="100%"
       zIndex={100}
-      backgroundColor="rgba(0, 0, 0, 0.5)"
       style={{
+        backgroundColor: "#000000",
         justifyContent: "center",
         alignItems: "center",
       }}
