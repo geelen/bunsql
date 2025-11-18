@@ -69,13 +69,11 @@ export function DataGrid(props: DataGridProps) {
             </box>
 
             <For each={props.store.rows()}>
-              {(row, idx) => {
-                const isSelected = idx() === props.store.selectedRowIndex()
-                return (
+              {(row, idx) => (
                   <box
                     flexDirection="row"
                     backgroundColor={
-                      isSelected && props.focused
+                      idx() === props.store.selectedRowIndex() && props.focused
                         ? theme.colors.selected
                         : idx() % 2 === 0
                         ? theme.colors.gridRowEven
@@ -104,8 +102,7 @@ export function DataGrid(props: DataGridProps) {
                       }}
                     </For>
                   </box>
-                )
-              }}
+              )}
             </For>
           </box>
         </scrollbox>
