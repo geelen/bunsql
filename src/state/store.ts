@@ -1,7 +1,7 @@
 import { createSignal, createEffect } from "solid-js"
 import { SQLite, type Sort, type TableInfo, type ColumnInfo } from "../db/sqlite"
 
-export type FocusMode = "sidebar" | "grid" | "modal"
+export type FocusMode = "sidebar" | "grid" | "row-detail"
 
 export interface AppState {
   db: SQLite

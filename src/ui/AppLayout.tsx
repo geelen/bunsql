@@ -1,9 +1,10 @@
-import { createSignal } from "solid-js"
+import { createSignal, Show } from "solid-js"
 import { useKeyboard, useRenderer } from "@opentui/solid"
 import type { AppState } from "../state/store"
 import { Sidebar } from "./Sidebar"
 import { DataGrid } from "./DataGrid"
 import { StatusBar } from "./StatusBar"
+import { RowDetailModal } from "./RowDetailModal"
 import { theme } from "../theme"
 
 interface AppLayoutProps {
@@ -18,6 +19,13 @@ export function AppLayout(props: AppLayoutProps) {
       renderer.stop()
       props.store.db.close()
       process.exit(0)
+    }
+
+    if (key.name === "escape") {
+      if (props.store.focus() === "row-detail") {
+        props.store.setFocus("grid")
+      }
+      return
     }
 
     if (key.name === "tab") {
@@ -37,6 +45,12 @@ export function AppLayout(props: AppLayoutProps) {
     }
 
     if (props.store.focus() === "grid") {
+      if (key.name === "return") {
+        if (props.store.rows().length > 0) {
+          props.store.setFocus("row-detail")
+        }
+      }
+
       if (key.name === "c") {
         try {
           const table = props.store.selectedTable()
@@ -75,6 +89,23 @@ export function AppLayout(props: AppLayoutProps) {
         }
       }
     }
+
+    if (props.store.focus() === "row-detail") {
+      if (key.name === "j" || key.name === "down") {
+        const current = props.store.selectedRowIndex()
+        const maxIndex = props.store.rows().length - 1
+        if (current < maxIndex) {
+          props.store.setSelectedRowIndex(current + 1)
+        }
+      }
+
+      if (key.name === "k" || key.name === "up") {
+        const current = props.store.selectedRowIndex()
+        if (current > 0) {
+          props.store.setSelectedRowIndex(current - 1)
+        }
+      }
+    }
   })
 
   return (
@@ -96,6 +127,13 @@ export function AppLayout(props: AppLayoutProps) {
         <DataGrid store={props.store} focused={props.store.focus() === "grid"} />
       </box>
       <StatusBar store={props.store} />
+      
+      <Show when={props.store.focus() === "row-detail"}>
+        <RowDetailModal
+          store={props.store}
+          onClose={() => props.store.setFocus("grid")}
+        />
+      </Show>
     </box>
   )
 }

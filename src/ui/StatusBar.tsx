@@ -12,7 +12,9 @@ export function StatusBar(props: StatusBarProps) {
     if (focus === "sidebar") {
       return "↑/↓ Navigate | Enter Load | Tab Switch | / Toggle system | q Quit"
     } else if (focus === "grid") {
-      return "↑/↓ Navigate | s Sort | c Count | Tab Switch | q Quit"
+      return "↑/↓ Navigate | Enter Detail | c Count | [/] Page | Tab Switch | q Quit"
+    } else if (focus === "row-detail") {
+      return "j/k Navigate rows | Esc Close | q Quit"
     }
     return "Esc Close | q Quit"
   }
