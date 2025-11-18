@@ -16,14 +16,14 @@ interface DataGridProps {
 export function DataGrid(props: DataGridProps) {
   const getColumnWidth = (colName: string, index: number) => {
     const rows = props.store.rows()
-    const headerLen = colName.length
+    const headerLen = colName.length + 2
     const maxContentLen = rows.reduce((max, row) => {
       const val = row[colName]
       const len = String(val ?? "NULL").length
       return Math.max(max, len)
     }, 0)
     
-    return Math.min(Math.max(headerLen, maxContentLen) + 2, 30)
+    return Math.min(Math.max(headerLen, maxContentLen) + 2, 32)
   }
 
   return (
@@ -70,7 +70,7 @@ export function DataGrid(props: DataGridProps) {
                     if (sort.col === col.name) {
                       return sort.dir === "ASC" ? " ▲" : " ▼"
                     }
-                    return ""
+                    return "  "
                   }
 
                   return (
