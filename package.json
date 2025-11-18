@@ -1,6 +1,6 @@
 {
   "name": "bunsql",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fast terminal SQLite inspector powered by Bun and @opentui/solid",
   "type": "module",
   "bin": {
