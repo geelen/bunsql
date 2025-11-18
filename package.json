@@ -11,11 +11,13 @@
   },
   "files": [
     "bin",
-    "src"
+    "src",
+    "bunfig.toml"
   ],
   "dependencies": {
+    "@opentui/core": "^0.1.45",
     "@opentui/solid": "^0.1.44",
-    "solid-js": "^1.9.3"
+    "solid-js": "^1.9.10"
   },
   "keywords": [
     "sqlite",
