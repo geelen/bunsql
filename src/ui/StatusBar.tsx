@@ -10,9 +10,9 @@ export function StatusBar(props: StatusBarProps) {
   const getHints = () => {
     const focus = props.store.focus()
     if (focus === "sidebar") {
-      return "↑/↓ Navigate | Enter Load | Tab Switch | / Toggle system | q Quit"
+      return "↑/↓ Navigate | Enter Load | → Switch | / Toggle system | q Quit"
     } else if (focus === "grid") {
-      return "↑/↓ Navigate | Enter Detail | c Count | [/] Page | Tab Switch | q Quit"
+      return "↑/↓ Rows | ←/→ Columns | s Sort | Enter Detail | c Count | [/] Page | q Quit"
     } else if (focus === "row-detail") {
       return "j/k Navigate rows | Esc Close | q Quit"
     }

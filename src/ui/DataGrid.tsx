@@ -61,12 +61,26 @@ export function DataGrid(props: DataGridProps) {
               style={{ borderColor: theme.colors.border }}
             >
               <For each={props.store.columns()}>
-                {(col) => {
+                {(col, idx) => {
                   const width = getColumnWidth(col.name, col.cid)
+                  const isSelected = () => idx() === props.store.selectedColumnIndex() && props.focused
+                  const currentSort = () => props.store.sort()
+                  const sortIndicator = () => {
+                    const sort = currentSort()
+                    if (sort.col === col.name) {
+                      return sort.dir === "ASC" ? " ▲" : " ▼"
+                    }
+                    return ""
+                  }
+
                   return (
                     <box width={width} paddingRight={1}>
-                      <text style={{ fg: theme.colors.textDim }}>
-                        {col.name}
+                      <text 
+                        style={{ 
+                          fg: isSelected() ? theme.colors.text : theme.colors.textDim 
+                        }}
+                      >
+                        {isSelected() ? <b>{col.name}{sortIndicator()}</b> : <>{col.name}{sortIndicator()}</>}
                       </text>
                     </box>
                   )

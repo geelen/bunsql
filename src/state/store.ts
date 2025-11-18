@@ -33,6 +33,8 @@ export interface AppState {
   setShowSystemTables: (show: boolean) => void
   selectedRowIndex: () => number
   setSelectedRowIndex: (index: number) => void
+  selectedColumnIndex: () => number
+  setSelectedColumnIndex: (index: number) => void
 }
 
 export async function createStore(dbPath: string): Promise<AppState> {
@@ -51,6 +53,7 @@ export async function createStore(dbPath: string): Promise<AppState> {
   const [focus, setFocus] = createSignal<FocusMode>("sidebar")
   const [showSystemTables, setShowSystemTables] = createSignal(false)
   const [selectedRowIndex, setSelectedRowIndex] = createSignal(0)
+  const [selectedColumnIndex, setSelectedColumnIndex] = createSignal(0)
 
   const selectedTable = () => {
     const idx = selectedTableIndex()
@@ -93,6 +96,13 @@ export async function createStore(dbPath: string): Promise<AppState> {
     }
   })
 
+  createEffect(() => {
+    sort()
+    page()
+    pageSize()
+    loadTableData()
+  })
+
   loadTables()
 
   return {
@@ -125,5 +135,7 @@ export async function createStore(dbPath: string): Promise<AppState> {
     setShowSystemTables,
     selectedRowIndex,
     setSelectedRowIndex,
+    selectedColumnIndex,
+    setSelectedColumnIndex,
   }
 }

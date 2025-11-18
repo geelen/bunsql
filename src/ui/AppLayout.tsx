@@ -32,8 +32,37 @@ export function AppLayout(props: AppLayoutProps) {
       const current = props.store.focus()
       if (current === "sidebar") {
         props.store.setFocus("grid")
+        props.store.setSelectedColumnIndex(0)
       } else if (current === "grid") {
         props.store.setFocus("sidebar")
+      }
+      return
+    }
+
+    if (key.name === "left") {
+      const current = props.store.focus()
+      if (current === "grid") {
+        const colIndex = props.store.selectedColumnIndex()
+        if (colIndex > 0) {
+          props.store.setSelectedColumnIndex(colIndex - 1)
+        } else {
+          props.store.setFocus("sidebar")
+        }
+      }
+      return
+    }
+
+    if (key.name === "right") {
+      const current = props.store.focus()
+      if (current === "sidebar") {
+        props.store.setFocus("grid")
+        props.store.setSelectedColumnIndex(0)
+      } else if (current === "grid") {
+        const maxIndex = props.store.columns().length - 1
+        const colIndex = props.store.selectedColumnIndex()
+        if (colIndex < maxIndex) {
+          props.store.setSelectedColumnIndex(colIndex + 1)
+        }
       }
       return
     }
@@ -48,6 +77,24 @@ export function AppLayout(props: AppLayoutProps) {
       if (key.name === "return") {
         if (props.store.rows().length > 0) {
           props.store.setFocus("row-detail")
+        }
+      }
+
+      if (key.name === "s") {
+        const columns = props.store.columns()
+        const colIndex = props.store.selectedColumnIndex()
+        const selectedCol = columns[colIndex]
+        if (selectedCol) {
+          const currentSort = props.store.sort()
+          if (currentSort.col === selectedCol.name) {
+            if (currentSort.dir === "ASC") {
+              props.store.setSort({ col: selectedCol.name, dir: "DESC" })
+            } else {
+              props.store.setSort({ col: undefined, dir: "ASC" })
+            }
+          } else {
+            props.store.setSort({ col: selectedCol.name, dir: "ASC" })
+          }
         }
       }
 
@@ -122,6 +169,7 @@ export function AppLayout(props: AppLayoutProps) {
           onSelect={(index) => {
             props.store.setSelectedTableIndex(index)
             props.store.setFocus("grid")
+            props.store.setSelectedColumnIndex(0)
           }}
         />
         <DataGrid store={props.store} focused={props.store.focus() === "grid"} />
